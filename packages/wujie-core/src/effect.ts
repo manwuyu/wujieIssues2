@@ -172,7 +172,7 @@ function rewriteAppendOrInsertChild(opts: {
             execHooks(plugins, "appendOrInsertElementHook", element, iframe.contentWindow);
             return res;
           }
-         
+
           // 排除css
           if (href && !isMatchUrl(href, getEffectLoaders("cssExcludes", plugins))) {
             getExternalStyleSheets(
@@ -182,8 +182,8 @@ function rewriteAppendOrInsertChild(opts: {
             ).forEach(({ src, ignore, contentPromise }) =>
               contentPromise.then(
                 (content) => {
-                  console.log('ignore', ignore )
-                  console.log('src', src )
+                  console.log("ignore", ignore);
+                  console.log("src", src);
                   // 处理 ignore 样式
                   if (ignore && src) {
                     const stylesheetElement = iframeDocument.createElement("link");
@@ -192,17 +192,15 @@ function rewriteAppendOrInsertChild(opts: {
                     rawDOMAppendOrInsertBefore.call(this, stylesheetElement, refChild);
                     manualInvokeElementEvent(element, "load");
                   } else {
-
-                    
                     // 记录js插入样式，子应用重新激活时恢复
                     const stylesheetElement = iframeDocument.createElement("style");
                     // 处理css-loader插件
                     const cssLoader = getCssLoader({ plugins, replace });
                     stylesheetElement.innerHTML = cssLoader(content, src, curUrl);
 
-                    console.log('content',  content )
-                    console.log('src',  src, )
-                    console.log('curUrl',  curUrl )
+                    console.log("content", content);
+                    console.log("src", src);
+                    console.log("curUrl", curUrl);
 
                     styleSheetElements.push(stylesheetElement);
 
